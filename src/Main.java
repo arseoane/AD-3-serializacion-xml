@@ -33,7 +33,7 @@ class productoTransient implements Serializable {
 public class Main {
     public static void main(String[] args) {
         try {
-            producto p1 = new producto("Ordenador", 10, 599.99);
+            producto p1 = new producto("Ordenador", 25, 599.99);
 
             ObjectOutputStream oos = new ObjectOutputStream(
                     new FileOutputStream("serial")
@@ -51,35 +51,37 @@ public class Main {
             p2 = (producto) ois.readObject();
             ois.close();
 
+            System.out.println("PRODUCTO");
             System.out.println("Nome: " + p2.nome);
             System.out.println("Num1: " + p2.num1);
             System.out.println("Num2: " + p2.num2);
 
-            productoTransient p3 = new productoTransient("Ordenador", 25, 599.99);
+            productoTransient pt1 = new productoTransient("Portatil", 999, 799.99);
 
-            ObjectOutputStream oos2 = new ObjectOutputStream(
+            oos = new ObjectOutputStream(
                     new FileOutputStream("serial")
             );
 
-            oos2.writeObject(p1);
-            oos2.close();
+            oos.writeObject(pt1);
+            oos.close();
 
-            productoTransient p4;
+            productoTransient pt2;
 
-            ObjectInputStream ois2 = new ObjectInputStream(
+            ois = new ObjectInputStream(
                     new FileInputStream("serial")
             );
 
-            p4 = (productoTransient) ois2.readObject();
+            pt2 = (productoTransient) ois.readObject();
             ois.close();
 
-            System.out.println("Nome: " + p4.nome);
-            System.out.println("Num1: " + p4.num1);
-            System.out.println("Num2: " + p4.num2);
+            System.out.println();
+            System.out.println("PRODUCTO TRANSIENT");
+            System.out.println("Nome: " + pt2.nome);
+            System.out.println("Num1: " + pt2.num1);
+            System.out.println("Num2: " + pt2.num2);
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 }
